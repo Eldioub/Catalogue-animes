@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+.container {
+  padding: 3% 10% 5% 10%;
+}
+
+.search{
+  margin-left: 10px;
+  width: 30%;
+}
+
+.dropDown{
+  border-color: #4334C8;
+  margin-left: 10px;
+}
+
+.title{
+  color: #4334C8;
+  font-family: inter, sans-serif;
+  padding: 3% 0;
+}
+
+.table{
+  margin-bottom: 20px;
+}
+
+.btnFavoris{
+  margin-left: 70%;
+}
