@@ -17,21 +17,46 @@ function App() {
   const [animes, setAnimes] = useState([]);
   const API_URL = 'https://kitsu.io/api/edge/anime';
 
-  const [selectedCity, setSelectedCity] = useState(null);
-  const cities = [
-      { name: 'New York', code: 'NY' },
-      { name: 'Rome', code: 'RM' },
-      { name: 'London', code: 'LDN' },
-      { name: 'Istanbul', code: 'IST' },
-      { name: 'Paris', code: 'PRS' }
-  ];
-
+  const [selectedSeasonYear, setSelectedSeasonYear] = useState(null);
+  const [selectedAgeRating, setSelectedAgeRating] = useState(null);
+  const [seasonYearsList, setSeasonYearsList] = useState([]);
+  const [ageRatingsList, setAgeRatingsList] = useState([]);
+  const [ageRatingGuidsList, setAgeRatingGuidsList] = useState([]);
 
   useEffect(() => {
-    axios.get(API_URL)
-      .then(res => setAnimes(res.data.data))
-      .catch(error => console.log(error));
-  });
+    const fetchData = async () => {
+      const res = await axios.get(API_URL);
+      setAnimes(res.data.data);
+      setSeasonYearsList(Array.from(new Set(res.data.data.map((anime) => anime.attributes.startDate.slice(0, 4))) ));
+      setAgeRatingsList(Array.from(new Set(res.data.data.map((anime) => anime.attributes.ageRatingGuide))));
+      setAgeRatingGuidsList(Array.from(new Set(res.data.data.map((anime) => anime.attributes.ageRating))));
+    };
+    fetchData();
+  }, []);
+
+  const ageList = [];
+  for(let i=0 ; i<ageRatingsList.length ; i++){
+   ageList.push({name: ageRatingsList[i], code: ageRatingGuidsList[i]})
+  }
+
+  /*
+  const fetchDataBySeasonYear = useEffect((seasonYear) => {
+    const fetchData = async (seasonYear) => {
+      const res = await axios.get(`${API_URL}?filter[seasonYear]=${seasonYear}`);
+      setAnimes(res.data.data);
+    };
+    fetchData();
+  }, []);
+  */
+
+
+  const linkTemplate = (rowData) => {
+    return (
+      <a href={`https://kitsu.io/anime/${rowData.id}`} target="_blank" rel="noopener noreferrer">Voir details</a>
+    );
+  };  
+
+  
 
   return (
     <div className='container'>
@@ -41,10 +66,10 @@ function App() {
           <InputText placeholder="Search" />
         </span>
         <span className="p-input search">
-        <Dropdown value={selectedCity} onChange={(e) => setSelectedCity(e.value)} options={cities} optionLabel="name" placeholder="Année" className="w-full md:w-14rem border-cyan-500" />
+        <Dropdown value={selectedSeasonYear} onChange={(e) => setSelectedSeasonYear(e.value)} options={seasonYearsList} placeholder="Année" className="w-full md:w-14rem" />
         </span>
         <span className="p-input dropDown">
-            <Dropdown value={selectedCity} onChange={(e) => setSelectedCity(e.value)} options={cities} optionLabel="name" placeholder="Age Recommandé" className="w-full md:w-14rem" />
+            <Dropdown value={selectedAgeRating} onChange={(e) => setSelectedAgeRating(e.value)} options={ageList} optionLabel="name" optionValue='code' placeholder="Age Recommandé" className="w-full md:w-14rem" />
         </span>
       </div>
       <div className="card table">
@@ -54,6 +79,7 @@ function App() {
               <Column field="attributes.titles.ja_jp" header="Titre Japonais" sortable></Column>
               <Column field="attributes.ageRatingGuide" header="Age Recommendé" sortable></Column>
               <Column field="attributes.ratingRank" header="Rang" sortable></Column>
+              <Column field="id" header="" body={linkTemplate}></Column>
           </DataTable>
       </div>
       <div className='btnFavoris'>
