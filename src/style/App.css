@@ -21,9 +21,15 @@
 }
 
 .table{
-  margin-bottom: 20px;
+  border-collapse: collapse;
+  width: 100%;
+  font-family: inter, sans-serif;
+  border-radius: 50px !important;
 }
 
 .btnFavoris{
-  margin-left: 70%;
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: right;
 }
