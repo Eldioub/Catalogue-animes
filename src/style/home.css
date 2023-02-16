@@ -1,7 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
-
 .container {
   padding: 3% 10% 5% 10%;
+  contain: layout;
 }
 
 .search{
@@ -16,7 +15,6 @@
 
 .title{
   color: #4334C8;
-  font-family: inter, sans-serif;
   padding: 3% 0;
 }
 
