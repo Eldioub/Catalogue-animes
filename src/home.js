@@ -41,7 +41,7 @@ function Home() {
 
   const linkAnime = (anime) => {
     return (
-      <Link to={`./anime/${anime.id}`}>
+      <Link to={`/anime/${anime.id}`}>
         Voir details
       </Link>
     );

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const BtnBack = () => {
     return(
-        <Link to={`/`} className="link cover">
+        <Link to={`/`} className="link">
           <Button icon="pi pi-undo" className="p-button-rounded" label='Retourner au catalogue' />
         </Link>
     );
