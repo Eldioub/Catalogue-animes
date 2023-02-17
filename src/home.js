@@ -58,6 +58,7 @@ function Home() {
     setSelectedAgeRating(e.value);
     setSelectedSeasonYear(0);
     setCurrentPaginator(0);
+    setSelectedSeasonYear(0);
     setApi(`${API_URL}?filter[ageRating]=${e.value}`);
   }
 
@@ -77,15 +78,15 @@ function Home() {
       <div className="card flex flex-wrap justify-content-center gap-3">
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
-          <InputText placeholder="Recherche anime" onKeyDown={onEnterSearch} />
+          <InputText placeholder="Recherche anime" onKeyDown={onEnterSearch}/>
         </span>
         <span className="p-input search">
           <Dropdown value={selectedSeasonYear} onChange={onChangeSeasonYear} options={seasonYearsList} 
-          placeholder="Année" className="w-full md:w-14rem" />
+          placeholder="Année" className="p-dropdown-outlined" />
         </span>
-        <span className="p-input dropDown">
+        <span className="p-dropdown-outlined dropDown">
           <Dropdown value={selectedAgeRating} onChange={onChangeAgeRating} options={ageList} 
-          optionLabel="name" optionValue='code' placeholder="Age Recommandé" className="w-full md:w-14rem" />
+          optionLabel="name" optionValue='code' placeholder="Age Recommandé" className="p-dropdown-outlined"  />
         </span>
       </div>
       <div className="card">
