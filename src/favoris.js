@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import './style/favoris.css';
 
 const Favoris = () => {
-    const favoriteAnimes = localStorage.getItem("favoriteAnimes");
+    const favoriteAnimes = JSON.parse(localStorage.getItem("favoriteAnimes"));
+    console.log(favoriteAnimes);
     return(
         <div className="container">
             <div className="box">
@@ -14,8 +15,8 @@ const Favoris = () => {
                 <BtnBack />
             </div>
             <div className="favorisGrid">
-                {favoriteAnimes && favoriteAnimes.length>0 ? favoriteAnimes.map(anime => 
-                    <div key={anime.id}>
+                {favoriteAnimes && favoriteAnimes.length>0 ? favoriteAnimes.map((anime,i) => 
+                    <div key={i}>
                         <Link to={`/anime/${anime.id}`}>
                             <img src={anime.attributes.posterImage.small} alt={anime.attributes.canonicalTitle} />
                         </Link>

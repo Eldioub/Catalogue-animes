@@ -20,10 +20,15 @@ const AnimeDetail = () => {
         fetchData();   
     });
 
-    const [favoriteAnimes, setFavoriteAnimes] = useState(() => localStorage.getItem("favoriteAnimes") || []);
-    //console.log(favoriteAnimes);
+    const [favoriteAnimes, setFavoriteAnimes] = useState(() => JSON.parse(localStorage.getItem("favoriteAnimes")) || []);
+
     const favorisInitial = favoriteAnimes.some(f => f.id === id) ? ["Retirer aux favoris",'pi pi-heart-fill', 'p-button-rounded'] : ["Ajouter aux favoris", 'pi pi-heart','p-button-outlined'];
     const [favoris, setFavoris] = useState(favorisInitial);
+    
+    useEffect(() => {
+        localStorage.setItem("favoriteAnimes", JSON.stringify(favoriteAnimes));
+    }, [favoriteAnimes]);
+    
     const addRemoveFavoris = () => {
         if (favoriteAnimes.some(f => f.id === id)) {
           setFavoriteAnimes((prev) => prev.filter((f) => f.id !== id));
@@ -32,7 +37,6 @@ const AnimeDetail = () => {
           setFavoriteAnimes((prev) => [...prev, anime]);
           setFavoris(["Retirer aux favoris",'pi pi-heart-fill','p-button-rounded']);
         }
-        localStorage.setItem("favoriteAnimes", favoriteAnimes);
     };
 
     return(
