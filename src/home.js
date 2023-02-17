@@ -50,11 +50,13 @@ function Home() {
   const onChangeSeasonYear = (e)  => {
     setSelectedSeasonYear(e.value);
     setCurrentPaginator(0);
+    setSelectedAgeRating('');
     setApi(`${API_URL}?filter[seasonYear]=${e.value}`);
   };
   
   const onChangeAgeRating = (e) => {
     setSelectedAgeRating(e.value);
+    setSelectedSeasonYear(0);
     setCurrentPaginator(0);
     setApi(`${API_URL}?filter[ageRating]=${e.value}`);
   }
