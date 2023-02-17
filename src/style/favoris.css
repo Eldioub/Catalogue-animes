@@ -1,0 +1,17 @@
+.box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.favorisGrid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    grid-auto-rows: 100px;
+}
+
+.favorisGrid>div>a>img{
+    border-radius: 2em;
+}
+

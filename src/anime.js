@@ -20,15 +20,30 @@ const AnimeDetail = () => {
         fetchData();   
     });
 
+    const [favoriteAnimes, setFavoriteAnimes] = useState(() => localStorage.getItem("favoriteAnimes") || []);
+    //console.log(favoriteAnimes);
+    const favorisInitial = favoriteAnimes.some(f => f.id === id) ? ["Retirer aux favoris",'pi pi-heart-fill', 'p-button-rounded'] : ["Ajouter aux favoris", 'pi pi-heart','p-button-outlined'];
+    const [favoris, setFavoris] = useState(favorisInitial);
+    const addRemoveFavoris = () => {
+        if (favoriteAnimes.some(f => f.id === id)) {
+          setFavoriteAnimes((prev) => prev.filter((f) => f.id !== id));
+          setFavoris(["Ajouter aux favoris",'pi pi-heart', 'p-button-outlined']);
+        } else {
+          setFavoriteAnimes((prev) => [...prev, anime]);
+          setFavoris(["Retirer aux favoris",'pi pi-heart-fill','p-button-rounded']);
+        }
+        localStorage.setItem("favoriteAnimes", favoriteAnimes);
+    };
+
     return(
         <div className="container">
             <div className="animeDetailContainer">
                 <div className="centerBtn">
-                    <img className="coverImage" src={anime ? anime.attributes.coverImage.original : ''} alt={anime ? anime.attributes.canonicalTitle : 'No Iamge Found'} />
+                    <img className="coverImage" src={anime ? anime.attributes.coverImage?.original : ''} alt={anime ? anime.attributes.canonicalTitle : 'No Iamge Found'} />
                     <BtnBack />
                 </div>
                 <div>
-                    <img className="posterImage" src={anime ? anime.attributes.posterImage.original : ''} alt={anime ? anime.attributes.canonicalTitle : 'No Iamge Found'} />
+                    <img className="posterImage" src={anime ? anime.attributes.posterImage?.original : ''} alt={anime ? anime.attributes.canonicalTitle : 'No Iamge Found'} />
                 </div>
                 <div className="h-30">
                     <div className="titleBox">
@@ -36,7 +51,7 @@ const AnimeDetail = () => {
                         <span className="rang">° Rang {anime ? anime.attributes.ratingRank : 'N/A'}</span>
                     </div>
                     <div className="addFavoris">
-                        <Button type="button" label="Ajouter aux favoris" icon="pi pi-heart" iconPos="right" className="p-button-outlined" />
+                        <Button type="button" label={favoris[0]} icon={favoris[1]} iconPos="right" className={favoris[2]}  onClick={addRemoveFavoris} />
                     </div>
                     <div className="synopsis">
                         <p>{anime ? anime.attributes.synopsis : ''}</p>
